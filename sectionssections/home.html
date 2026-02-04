@@ -1,0 +1,115 @@
+<div class="container-fluid animate__animated animate__fadeIn">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="welcome-banner p-4 rounded-5 text-white shadow-lg d-flex align-items-center justify-content-between" 
+                 style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-right: 8px solid #f39c12;">
+                <div>
+                    <h2 class="fw-bold mb-2">أهلاً بك، <span id="display-name">...</span> 👋</h2>
+                    <p class="mb-0 opacity-75">مستواك الحالي: <span class="badge bg-warning text-dark px-3" id="display-level">...</span></p>
+                    <p class="mt-2 small"><i class="fas fa-fingerprint me-1"></i> الرقم الجامعي: <span id="display-id">...</span></p>
+                </div>
+                <div class="d-none d-md-block">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4439/4439957.png" width="120" class="animate__animated animate__pulse animate__infinite">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-3 hover-zoom">
+                <div class="d-flex align-items-center">
+                    <div class="icon-box bg-primary-subtle text-primary rounded-4 p-3 me-3">
+                        <i class="fas fa-tasks fa-2x"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-1">مهام اليوم</h6>
+                        <h4 class="fw-bold mb-0">5 / 8</h4>
+                    </div>
+                </div>
+                <div class="progress mt-3" style="height: 6px;">
+                    <div class="progress-bar bg-primary" style="width: 65%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-3 hover-zoom">
+                <div class="d-flex align-items-center">
+                    <div class="icon-box bg-success-subtle text-success rounded-4 p-3 me-3">
+                        <i class="fas fa-book-open fa-2x"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-1">الكورس النشط</h6>
+                        <h4 class="fw-bold mb-0" id="display-course">...</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-3 hover-zoom">
+                <div class="d-flex align-items-center">
+                    <div class="icon-box bg-warning-subtle text-warning rounded-4 p-3 me-3">
+                        <i class="fas fa-trophy fa-2x"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-1">الرتبة الحالية</h6>
+                        <h4 class="fw-bold mb-0">طالب مثابر</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <h5 class="fw-bold mb-4 border-bottom pb-2"><i class="fas fa-rocket me-2 text-primary"></i> مسار التعلم الخاص بك</h5>
+                <div class="timeline-simple">
+                    <div class="p-3 border-start border-primary border-3 mb-3 bg-light rounded-3">
+                        <small class="text-primary fw-bold">الآن</small>
+                        <h6 class="mb-1 fw-bold">مشاهدة فيديو: "أساسيات القيادة الذاتية"</h6>
+                        <p class="small text-muted mb-0">تبقّى لك 10 دقائق لإنهاء هذا الدرس.</p>
+                    </div>
+                    <div class="p-3 border-start border-secondary border-3 mb-3 bg-light rounded-3 opacity-75">
+                        <small class="text-muted fw-bold">قادم</small>
+                        <h6 class="mb-1 fw-bold">اختبار تقييم المستوى 2</h6>
+                        <p class="small text-muted mb-0">سيفتح الاختبار غداً الساعة 9 صباحاً.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+                <h5 class="fw-bold mb-3">نصيحة اليوم 💡</h5>
+                <div class="p-3 rounded-4" style="background: #fff9f0; border: 1px dashed #f39c12;">
+                    <p class="text-dark small mb-0 italic">"النجاح لا يأتي بالصدفة، بل هو نتيجة الاستمرار في فعل الأشياء الصغيرة بشكل صحيح كل يوم."</p>
+                </div>
+                <button class="btn btn-primary w-100 mt-4 rounded-3 py-2 fw-bold" onclick="loadSection('tasks')">
+                    ابدأ مهامك الآن
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-zoom { transition: 0.3s; }
+    .hover-zoom:hover { transform: translateY(-5px); }
+    .icon-box { width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
+</style>
+
+<script>
+    // توزيع البيانات المستلمة من السيرفر (باستخدام المفاتيح التي أرسلتها)
+    (function fillHomeData() {
+        const session = JSON.parse(localStorage.getItem('student_session'));
+        if (session) {
+            document.getElementById('display-name').innerText = session.name;
+            document.getElementById('display-level').innerText = session.level;
+            document.getElementById('display-id').innerText = session.id;
+            
+            // استخدام مفتاح courseId من السيرفر
+            document.getElementById('display-course').innerText = session.courseId || "لا يوجد كورس حالي";
+        }
+    })();
+</script>
+
